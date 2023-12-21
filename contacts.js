@@ -1,7 +1,7 @@
 const fs = require("fs/promises");
 const path = require("path");
 
-const contactsPath = path.join(__dirname, "./db/contacts.json");
+const contactsPath = path.join(__dirname, "db", "contacts.json");
 const updateContacts = async (contacts) => {
   await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
 };
@@ -20,7 +20,7 @@ const getContactById = async (id) => {
 
 const addContact = async ({ name, email, phone }) => {
   const contacts = await listContacts();
-  const newContact = { name, email, phone };
+  const newContact = { id: nanoid(), name, email, phone };
   contacts.push(newContact);
   await updateContacts(contacts);
   return newContact;
